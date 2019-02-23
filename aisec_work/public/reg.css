@@ -30,3 +30,7 @@ img {
 	color: #037Ef3;
 	font-style: oblique;
 }
+
+#override a {
+	color: white;
+}
