@@ -34,6 +34,8 @@ form{
 	padding: 15px;
 }
 
+<<<<<<< HEAD
+=======
 .ques{
 	display: flex;
 	flex-direction: row;
@@ -63,3 +65,4 @@ label{
 input{
 	display: none;
 }
+>>>>>>> 4c9103b8459cf65c0015c2c8a87cf90c7bc30aa2

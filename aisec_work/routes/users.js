@@ -103,6 +103,7 @@ exp.AdminLogin = async (req, res) => {
 		if(!bcrypt.compare(encrypt,pass))
 		{
 			console.log("wrong details");
+			res.redirect("/adminlogin.html");
 			return res.sendError(err);
 		}
 
@@ -115,6 +116,7 @@ exp.AdminLogin = async (req, res) => {
 	else
 	{
 		console.log("no entry available in uname and pass");
+		res.redirect("/adminlogin.html");
 		return res.sendError("no value");
 	}
 };
