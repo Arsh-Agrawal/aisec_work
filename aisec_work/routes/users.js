@@ -13,7 +13,7 @@ exp.StudentLogin = async (req, res) => {
 	let uname, upass, qry, err, result;
 	uname = req.body.uname;
 	pass = req.body.pass;
-	
+	/*
 	// according to actual time utc = current time - 5:30
 	if(moment().isBefore('2019-02-25T12:30:00Z'))
 	{   
@@ -21,7 +21,7 @@ exp.StudentLogin = async (req, res) => {
 		console.log("not yet time");
 		res.redirect("/wait.html");
 	}
-
+*/
 	console.log(uname,pass);
 	if (uname && pass) {
 		
@@ -143,6 +143,7 @@ exp.registration = async (req, res) => {
 
 		}
 		pass = pass1;
+		
 		console.log(pass);
 
 		//enter into register
