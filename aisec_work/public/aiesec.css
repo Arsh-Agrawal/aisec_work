@@ -1,6 +1,6 @@
 #override {
 	font-family: 'Lato';
-	background-color:#037Ef3; 
+	background-color:#037Ef3;
 }
 
 #logo{
@@ -15,7 +15,7 @@
 
 
 .navbar{
-	background-color:#037Ef3; 
+	background-color:#037Ef3;
 }
 
 form{
@@ -32,4 +32,34 @@ margin-top: 30px;
 }
 form{
 	padding: 15px;
+}
+
+.ques{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+strong{
+	width: 100%;
+}
+
+.custom-radio{
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: flex-start;
+	margin: 15px 15px;
+	width: auto;
+	height: auto;
+}
+label{
+	height: 30px;
+	display: flex;
+	align-items: flex-start;
+	justify-content: flex-start;
+	line-height: 1.5rem;
+}
+input{
+	display: none;
 }
