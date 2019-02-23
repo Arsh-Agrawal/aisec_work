@@ -13,7 +13,7 @@ exp.StudentLogin = async (req, res) => {
 	let uname, upass, qry, err, result;
 	uname = req.body.uname;
 	pass = req.body.pass;
-	/*
+	
 	// according to actual time utc = current time - 5:30
 	if(moment().isBefore('2019-02-25T12:30:00Z'))
 	{   
@@ -21,7 +21,7 @@ exp.StudentLogin = async (req, res) => {
 		console.log("not yet time");
 		res.redirect("/wait.html");
 	}
-*/
+
 	console.log(uname,pass);
 	if (uname && pass) {
 		
@@ -87,7 +87,7 @@ exp.AdminLogin = async (req, res) => {
 	if(uname && pass)
 	{
 
-		qry = "select * from admin where uname =?";
+		qry = "select * from admin where uname = ?";
 		[err,result] = await to(db.query(qry,[uname]));
 		if(err || !result[0])
 		{
@@ -97,6 +97,8 @@ exp.AdminLogin = async (req, res) => {
 		}
 
 		let encrypt = result[0]['pass'];
+
+		console.log(pass);
 
 
 		if(!bcrypt.compare(encrypt,pass))
@@ -116,7 +118,7 @@ exp.AdminLogin = async (req, res) => {
 	{
 		console.log("no entry available in uname and pass");
 		res.redirect("/adminlogin.html");
-		return res.sendError("no value");
+		// return res.sendError("no value");
 	}
 };
 
