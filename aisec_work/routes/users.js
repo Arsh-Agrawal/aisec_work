@@ -14,14 +14,13 @@ exp.StudentLogin = async (req, res) => {
 	uname = req.body.uname;
 	pass = req.body.pass;
 	
-	//according to actual time utc = current time - 5:30
-	// if(moment().isBefore('2019-02-25T12:30:00Z'))
-	// {   
-	// 	console.log(moment());
-	// 	console.log("not yet time");
-	// 	// res.sendError("not yet");
-	// 	res.redirect("/wait.html");
-	// }
+	// according to actual time utc = current time - 5:30
+	if(moment().isBefore('2019-02-25T12:30:00Z'))
+	{   
+		console.log(moment());
+		console.log("not yet time");
+		res.redirect("/wait.html");
+	}
 
 	console.log(uname,pass);
 	if (uname && pass) {
@@ -127,12 +126,11 @@ exp.registration = async (req, res) => {
 	uname = req.body.uname;
 	clg = req.body.clg;
 	pass = req.body.pass;
-	reg = req.body.registration;
+	reg = req.body.reg;
 	email = req.body.email;
-	name = req.body.name;
+	name = req.body.names;
 	time_slot = req.body.time_slot;
 	phno = req.body.phno;
-
 
 	if (uname && clg && pass && reg && email && name && time_slot && phno) {
 
@@ -165,7 +163,7 @@ exp.registration = async (req, res) => {
 	} else {
 		console.log("enter all details");
 		res.redirect("/register.html");
-		return res.sendError("enter all details");
+		// return res.sendError("enter all details");
 	}
 };
 
