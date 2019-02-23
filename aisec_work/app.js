@@ -1,41 +1,35 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const express = require('express');
+const bodyParser = require('body-parser');
 
-var app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+const config = require('config');
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+const session = require('express-session');
+const passport = require('passport');
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+const response = require('./utils/response');
+const routes = require('./routes');
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
+const app = express();
+app.set("view options", {layout: false});
+app.use(express.static(__dirname + '/public'));
+
+require('./config/passport')(passport);
+
+app.use(session({secret: config.get('SESSION_SECRET_KEY')}));
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(response);
+
+app.use('/', routes);
+
+
+const port = process.env.PORT || 3000;
+
+app.listen(port, err => {
+    console.log(err || 'Listening on port ' + port);
 });
-
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
-
-module.exports = app;

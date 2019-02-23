@@ -1,9 +1,14 @@
-var express = require('express');
-var router = express.Router();
+const router =  require("express").Router();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+const users = require("./users.js");
+const paper = require("./quiz.js");
+
+router.post('/StudentLogin',users.StudentLogin);
+
+router.post('/AdminLogin',users.AdminLogin);
+
+router.post('/registration',users.registration);
+
+router.post('/quiz',paper.quiz);
 
 module.exports = router;
