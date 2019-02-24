@@ -69,6 +69,7 @@ exp.StudentLogin = async (req, res) => {
 
 		req.session.id = result[0]['id'];
 		req.session.reg = result[0]['reg_no'];
+		req.session.login = 1;
 		
 		res.redirect("/aiesec.html");
 		return res.sendSuccess(req.session.id, "Login Successfull");
