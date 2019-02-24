@@ -13,7 +13,7 @@ exp.StudentLogin = async (req, res) => {
 	let uname, upass, qry, err, result;
 	uname = req.body.uname;
 	pass = req.body.pass;
-	/*
+	
 	// according to actual time utc = current time - 5:30
 	if(moment().isBefore('2019-02-25T12:30:00Z'))
 	{   
@@ -21,7 +21,7 @@ exp.StudentLogin = async (req, res) => {
 		console.log("not yet time");
 		res.redirect("/wait.html");
 	}
-*/
+
 	console.log(uname,pass);
 	if (uname && pass) {
 		
@@ -36,15 +36,17 @@ exp.StudentLogin = async (req, res) => {
 			return res.sendError(err);
 		}
 
-
+		//encyption checking of passwords
 		let encrypt = result[0]['pass'];
-
-		if(!bcrypt.compare(encrypt,pass))
+		[err,result] = await to(bcrypt.compare(pass,encrypt));
+		if(err)
 		{
 			console.log("wrong details");
 			res.redirect("/login.html");
 			return res.sendError(err);
 		}
+
+		console.log(result); //check result once on the server
 
 		qry = "update user set login = 1 where uname = ? and login = 0"; //logged in..cant login later
 		[err, result] = await to(db.query(qry, [uname]));
@@ -96,19 +98,17 @@ exp.AdminLogin = async (req, res) => {
 			return res.sendError(err);
 		}
 
+		//encypted checking of passwords
 		let encrypt = result[0]['pass'];
-
-		console.log(pass);
-
-
-		if(!bcrypt.compare(encrypt,pass))
+		[err,result] = await to(bcrypt.compare(pass,encrypt));
+		if(err)
 		{
 			console.log("wrong details");
 			res.redirect("/adminlogin.html");
 			return res.sendError(err);
 		}
 		
-		console.log("correction");
+		console.log(result); //check passwords too
 
 		res.redirect("/register.html");
 		return res.sendSuccess("yahoo",result[0]);
@@ -118,7 +118,7 @@ exp.AdminLogin = async (req, res) => {
 	{
 		console.log("no entry available in uname and pass");
 		res.redirect("/adminlogin.html");
-		// return res.sendError("no value");
+		return res.sendError("no value");
 	}
 };
 
@@ -166,7 +166,7 @@ exp.registration = async (req, res) => {
 	} else {
 		console.log("enter all details");
 		res.redirect("/register.html");
-		// return res.sendError("enter all details");
+		return res.sendError("enter all details");
 	}
 };
 
