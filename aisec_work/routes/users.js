@@ -10,7 +10,7 @@ let exp = {};
 //hashing left and redirection left
 exp.StudentLogin = async (req, res) => {
 	//need to use salt and hash
-	let uname, upass, qry, err, result;
+	let uname, pass, qry, err, result;
 	uname = req.body.uname;
 	pass = req.body.pass;
 	
@@ -37,9 +37,13 @@ exp.StudentLogin = async (req, res) => {
 		}
 
 
-		let encrypt = result[0]['pass'];
+		let hash = result[0]['pass'];
 
-		if(!bcrypt.compare(encrypt,pass))
+		[err,res]=await to(bcrypt.compare(pass,hash));
+		console.log(res);
+
+
+		if(!res)
 		{
 			console.log("wrong details");
 			res.redirect("/login.html");
@@ -96,12 +100,13 @@ exp.AdminLogin = async (req, res) => {
 			return res.sendError(err);
 		}
 
-		let encrypt = result[0]['pass'];
+		let hash = result[0]['pass'];
 
-		console.log(pass);
+		[err,res]=await to(bcrypt.compare(pass,hash));
+		console.log(res);
 
 
-		if(!bcrypt.compare(encrypt,pass))
+		if(!res)
 		{
 			console.log("wrong details");
 			res.redirect("/adminlogin.html");
