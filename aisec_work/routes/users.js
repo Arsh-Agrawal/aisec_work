@@ -39,19 +39,19 @@ exp.StudentLogin = async (req, res) => {
 		//encyption checking of passwords
 		let encrypt = result[0]['pass'];
 		[err,result] = await to(bcrypt.compare(pass,encrypt));
-		if(err)
+		if(!result)
 		{
-			console.log("wrong details");
+			console.log("wrong user info");
 			res.redirect("/login.html");
 			return res.sendError(err);
 		}
 
 		console.log(result); //check result once on the server
-
+		
 		qry = "update user set login = 1 where uname = ? and login = 0"; //logged in..cant login later
 		[err, result] = await to(db.query(qry, [uname]));
 		if (err) {
-			console.log(err);
+			console.log("internal query error");
 			res.redirect("/login.html");
 			return res.sendError(err);
 		}
@@ -102,7 +102,7 @@ exp.AdminLogin = async (req, res) => {
 		//encypted checking of passwords
 		let encrypt = result[0]['pass'];
 		[err,result] = await to(bcrypt.compare(pass,encrypt));
-		if(err)
+		if(!result)
 		{
 			console.log("wrong details");
 			res.redirect("/adminlogin.html");
