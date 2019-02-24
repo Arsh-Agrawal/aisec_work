@@ -37,9 +37,12 @@ exp.StudentLogin = async (req, res) => {
 		}
 
 
-		let encrypt = result[0]['pass'];
+		let hash = result[0]['pass'];
 
-		if(!bcrypt.compare(encrypt,pass))
+		[err,res]=await to(bcrypt.compare(pass,hash));
+		console.log(res);
+
+		if(!res)
 		{
 			console.log("wrong details");
 			return res.sendError(err);
@@ -91,16 +94,19 @@ exp.AdminLogin = async (req, res) => {
 			return res.sendError(err);
 		}
 
-		let encrypt = result[0]['pass'];
+
+		let hash = result[0]['pass'];
+
+		[err,res]=await to(bcrypt.compare(pass,hash));
+		console.log(res);
 
 
-		if(!bcrypt.compare(encrypt,pass))
+		if(!res)
 		{
 			console.log("wrong details");
 			return res.sendError(err);
 		}
 
-		console.log("correction");
 
 		//redirection to registration
 		return res.sendSuccess("yahoo",result[0]);
