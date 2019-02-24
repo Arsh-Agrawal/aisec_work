@@ -22,7 +22,7 @@ require('./config/passport')(passport);
 app.use(session({secret: config.get('SESSION_SECRET_KEY')}));
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(response);
 
 app.use('/', routes);

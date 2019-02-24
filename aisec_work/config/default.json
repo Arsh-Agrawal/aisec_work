@@ -1,8 +1,8 @@
 {
     "DATABASE" : {
-        "host" : "becomealeader.in",
-        "user" : "giridhar",
-        "pass" : "giridhar",
+        "host" : "localhost",
+        "user" : "root",
+        "pass" : "",
         "dbname" : "aiesec"
     },
     "SESSION_SECRET_KEY" : "VuP9JPIiQ9Wz35wKbnU5Ej6e4xZv03TEvq9NRpUE",
