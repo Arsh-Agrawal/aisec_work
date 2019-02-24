@@ -10,7 +10,7 @@ let exp = {};
 //hashing left and redirection left
 exp.StudentLogin = async (req, res) => {
 	//need to use salt and hash
-	let uname, upass, qry, err, result;
+	let uname, pass, qry, err, result;
 	uname = req.body.uname;
 	pass = req.body.pass;
 	
@@ -68,7 +68,7 @@ exp.StudentLogin = async (req, res) => {
 
 		req.session.id = result[0]['id'];
 		req.session.reg = result[0]['reg_no'];
-		req.session.logintime 
+		//req.session.logintime = moment()
 		
 		res.redirect("/aiesec.html");
 		return res.sendSuccess(req.session.id, "Login Successfull");
