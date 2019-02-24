@@ -68,6 +68,7 @@ exp.StudentLogin = async (req, res) => {
 
 		req.session.id = result[0]['id'];
 		req.session.reg = result[0]['reg_no'];
+		req.session.logintime 
 		
 		res.redirect("/aiesec.html");
 		return res.sendSuccess(req.session.id, "Login Successfull");
@@ -136,7 +137,7 @@ exp.registration = async (req, res) => {
 
 	if (uname && clg && pass && reg && email && name && time_slot && phno) {
 
-		[err,pass1] = await to(bcrypt.hash(pass,10));
+		[err,pass1] = await to(bcrypt.hash(pass,12));
 		if(err)
 		{
 			console.log(err)
