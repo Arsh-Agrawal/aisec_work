@@ -28,23 +28,25 @@ exp.StudentLogin = async (req, res) => {
 		qry = "select * from user where uname =? and login =0";
 		[err,result] = await to(db.query(qry,[uname]));
 
+		// var try = result[0];
 		if(err || !result[0])
 		{
 			console.log(err);
-			console.log(result[0]);
+			// console.log(result[0]);
 			res.redirect("/login.html");
 			return res.sendError(err);
 		}
-
 
 		let encrypt = result[0]['pass'];
 
-		if(!bcrypt.compare(encrypt,pass))
+		[err,result] = await to(bcrypt.compare(pass,encrypt));
+		if(err || result == false)
 		{
-			console.log("wrong details");
 			res.redirect("/login.html");
 			return res.sendError(err);
 		}
+
+
 
 		qry = "update user set login = 1 where uname = ? and login = 0"; //logged in..cant login later
 		[err, result] = await to(db.query(qry, [uname]));
@@ -98,18 +100,13 @@ exp.AdminLogin = async (req, res) => {
 
 		let encrypt = result[0]['pass'];
 
-		console.log(pass);
-
-
-		if(!bcrypt.compare(encrypt,pass))
+		[err,result] = await to(bcrypt.compare(pass,encrypt));
+		if(err || result == false)
 		{
-			console.log("wrong details");
-			res.redirect("/adminlogin.html");
+			res.redirect("/login.html");
 			return res.sendError(err);
 		}
-
-		console.log("correction");
-
+		
 		res.redirect("/register.html");
 		return res.sendSuccess("yahoo",result[0]);
 		
@@ -136,7 +133,8 @@ exp.registration = async (req, res) => {
 
 	if (uname && clg && pass && reg && email && name && time_slot && phno) {
 
-		[err,pass1] = await to(bcrypt.hash(pass,10));
+		[err,pass1] = await to(bcrypt.hash(pass));
+		console.log(pass);
 		if(err)
 		{
 			console.log(err)
@@ -166,7 +164,7 @@ exp.registration = async (req, res) => {
 	} else {
 		console.log("enter all details");
 		res.redirect("/register.html");
-		// return res.sendError("enter all details");
+		return res.sendError("enter all details");
 	}
 };
 
