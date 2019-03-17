@@ -7,10 +7,9 @@ const bcrypt = require("bcryptjs");
 
 let exp = {};
 
-//hashing left and redirection left
 exp.StudentLogin = async (req, res) => {
 	//need to use salt and hash
-	let uname, upass, qry, err, result;
+	let uname, pass, qry, err, result;
 	uname = req.body.uname;
 	pass = req.body.pass;
 	
@@ -68,6 +67,7 @@ exp.StudentLogin = async (req, res) => {
 
 		req.session.id = result[0]['id'];
 		req.session.reg = result[0]['reg_no'];
+		req.session.login = 1;
 		
 		res.redirect("/aiesec.html");
 		return res.sendSuccess(req.session.id, "Login Successfull");
@@ -98,7 +98,8 @@ exp.AdminLogin = async (req, res) => {
 			return res.sendError(err);
 		}
 
-		let encrypt = result[0]['pass'];
+		let hash = result[0]['pass'];
+
 
 		[err,result] = await to(bcrypt.compare(pass,encrypt));
 		if(err || result == false)
@@ -133,8 +134,12 @@ exp.registration = async (req, res) => {
 
 	if (uname && clg && pass && reg && email && name && time_slot && phno) {
 
+<<<<<<< HEAD
 		[err,pass1] = await to(bcrypt.hash(pass));
 		console.log(pass);
+=======
+		[err,pass1] = await to(bcrypt.hash(pass,12));
+>>>>>>> 6424a124d89f8b020a80d8e138dbecd979e41509
 		if(err)
 		{
 			console.log(err)
